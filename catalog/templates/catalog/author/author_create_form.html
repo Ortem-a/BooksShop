@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="card shadow mr-5 mb-5">
+    <div class="card-header">
+        <h1>Создание автора</h1>
+    </div>
+    <div class="card-body">
+
+        <form class="form-group" action="{% url 'author_create_form_url' %}" method="post">
+            {% csrf_token %} {% if form.errors %}
+            <div class="alert alert-warning">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <strong>{{ form.name.label }}</strong>
+                <p>{{ form.name.help_text }}</p>
+                <div class="input-group mb-3">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.slug.label }}</strong> {{ form.slug.help_text }}
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        {{ form.slug }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.image.label }}</strong>
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        {{ form.image }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        <strong>{{ form.date_of_birth.label }}</strong>
+                        <p>{{ form.date_of_birth.help_text }}</p>
+                        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                            <div class="input-group-append">
+                                {{ form.date_of_birth }}
+                            </div>
+                            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                <div class="input-group-text">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(function() {
+                                $("#datetimepicker1").datetimepicker({
+                                    format: 'YYYY-MM-DD'
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.description.label }}</strong>
+                <p>{{ form.description.help_text }}</p>
+                <div class="input-group mb-3">
+                    {{ form.description }}
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <div class="card-footer">
+        <div align="center">
+            <button type="submit" class="btn btn-success btn-lg">Готово</button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block search_area %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'authors_list_url' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Поиск по избранным авторам" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+</form>
+{% endblock %} {% block content %}
+
+<h1>Избранные авторы</h1>
+
+{% if favoriteauthor_list %}
+<ul>
+    <div class="container">
+        <div class="row mb-lg-4">
+
+            {% for author in favoriteauthor_list %}
+
+            <div class="col mb-lg-4">
+                <div class="card shadow" style="width: 16rem;">
+                    <a href="{{ author.get_absolute_url }}">
+                        <div class="card-body">
+                            <img src="{{ author.get_image }}" class="card-img-top mb-4" style="height: 200px; width: 150px; display: block; margin: auto;">
+                            <h5 class="card-title">{{ author.get_name }}</h5>
+                            <p class="card-text">{{ author.get_date_of_birth }}</p>
+                        </div>
+                    </a>
+
+                    <div class="card-footer">
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</ul>
+{% else %}
+<p>У Вас нет избранных авторов.</p>
+{% endif %} {% endblock %}

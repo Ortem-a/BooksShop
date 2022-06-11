@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="card shadow mr-5 mb-5">
+  <div class="card-header">
+    <h1>UPDATING COUPON</h1>
+  </div>
+  <div class="card-body">
+
+    <form class="form-group" action="{{ coupon.get_update_url }}" method="post">
+      {% csrf_token %}
+
+      {% if form.errors %}
+      <div class="alert alert-warning">
+        {{ form.errors }}
+      </div>
+      {% endif %}
+
+      <div class="mb-3">
+        <strong>{{ form.name.label }}</strong>
+        <p>{{ form.name.help_text }}</p>
+        <div class="input-group mb-3">
+          {{ form.name }}
+        </div>
+      </div>
+      <div class="mb-3">
+        <strong>{{ form.slug.label }}</strong>
+        {{ form.slug.help_text }}
+        <div class="input-group mb-3">
+          <div class="input-group-append">
+            {{ form.slug }}
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <strong>{{ form.description.label }}</strong>
+        <p>{{ form.description.help_text }}</p>
+        <div class="input-group mb-3">
+            {{ form.description }}
+        </div>
+      </div>
+      <div class="mb-3">
+        <strong>{{ form.discount.label }}</strong>
+        <p>{{ form.discount.help_text }}</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text">%</span>
+            <div class="input-group-append">
+                {{ form.discount }}
+            </div>
+        </div>
+      </div>
+
+  </div>
+  <div class="card-footer">
+    <div align="center">
+      <button type="submit" class="btn btn-success btn-lg">SUBMIT</button>
+    </div>
+  </div>
+  </form>
+</div>
+
+
+{% endblock %}s

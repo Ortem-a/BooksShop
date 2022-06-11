@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block search_area %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'books_list_url' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Поиск по избранным книгам" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+</form>
+{% endblock %} {% block content %}
+
+<h1>Список избранных книг</h1>
+
+{% if favoritebook_list %}
+<ul>
+    <div class="container">
+        <div class="row mb-lg-4">
+
+            {% for book in favoritebook_list %}
+
+            <div class="col mb-lg-4">
+                <div class="card shadow" style="width: 16rem;">
+                    <a href="{{ book.get_absolute_url }}">
+                        <div class="card-body">
+                            <img src="{{ book.get_image }}" class="card-img-top mb-4" style="height: 200px; width: 150px; display: block; margin: auto;">
+                            <h5 class="card-title">{{ book.get_title }}</h5>
+                            <p class="card-text">{{ book.get_price }}₽</p>
+                            <!-- <a href="{{ book.book.get_absolute_url }}" class="btn btn-primary">READ</a> -->
+                        </div>
+                    </a>
+
+                    <div class="card-footer">
+
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</ul>
+{% else %}
+<p>У Вас нет избранных книг.</p>
+{% endif %} {% endblock %}

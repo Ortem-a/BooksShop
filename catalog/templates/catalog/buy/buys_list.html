@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block search_area %}
+  <form class="form-inline my-2 my-lg-0" action="{% url 'buys_list_url' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Поиск по заказам" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+{% endblock %}
+
+{% block content %}
+
+    <h1>buy List</h1>
+
+    {% if buys %}
+    <ul>
+      <div class="container">
+        <div class="row mb-lg-4">
+    
+          {% for buy in buys %}
+    
+          <div class="col mb-lg-4">
+            <div class="card shadow" style="width: 16rem;">
+              <a href="{{ buy.get_absolute_url }}">
+                <div class="card-body">
+                  <h5 class="card-title">Заказ от {{ buy.get_date }}</h5>
+                  <p>
+                    by {{ buy.user }}
+                  </p>
+                </div>
+              </a>
+              <div class="card-footer">
+                {{ buy.get_buy_cost }} ₽
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    
+    </ul>
+    {% else %}
+    <p>There are no buys in the library.</p>
+    {% endif %}
+    
+    <div class="align-items-end mb-lg-5">
+      <a href="{% url 'buy_create_form_url' %}">
+        <button type="submit" class="btn btn-success btn-lg">КНОПКА ДОБАВИТЬ</button>
+      </a>
+    </div>
+
+{% endblock %}

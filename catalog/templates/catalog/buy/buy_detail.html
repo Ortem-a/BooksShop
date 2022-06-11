@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mt-3">
+
+  <div class="col mb-3">
+    <a href="{% url 'buys_list_url' %}">
+      <button type="submit" class="btn btn-warning btn-lg shadow">КНОПКА НАЗАД</button>
+    </a>
+  </div>
+
+
+  <h1>BUY</h1>
+
+  <div class="card shadow">
+    <div class="card-header">
+      <h1>USER: {{ buy.user }}</h1>
+    </div>
+    <div class="card-body">
+      <p><strong>Cost:</strong> {{ buy.get_buy_cost }} ₽ </p>
+      <p><strong>Date:</strong> {{ buy.date }} </p>
+      <strong>Composition:</strong>
+      <div class="ml-4">
+        {% for book in buy.composition.all %}
+          <li><a href=" {{ book.get_absolute_url }} "> {{ book }} </a> {{ book.price }} ₽</li>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="card-footer">
+    </div>
+  </div>
+
+
+  <div class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col">
+        <a href="{{ buy.get_update_url }}">
+          <button type="submit" class="btn btn-success btn-lg shadow">КНОПКА РЕДАКТИРОВАТЬ</button>
+        </a>
+      </div>
+      <div class="col">
+        <a href="{{ buy.get_delete_url }}">
+          <button type="submit" class="btn btn-danger btn-lg shadow">КНОПКА УДАЛИТЬ</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

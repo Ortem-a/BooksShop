@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="mt-3">
+
+    <div class="col mb-3">
+        <a href="{% url 'tags_list_url' %}">
+            <button type="submit" class="btn btn-warning btn-lg shadow">К списку тэгов</button>
+        </a>
+    </div>
+
+
+    <h1>Тэг</h1>
+
+    <div class="card shadow">
+        <div class="card-header">
+            <h1>Название: {{ tag.name }}</h1>
+        </div>
+        <div class="card-body">
+            <strong>Описание:</strong>
+            <p>
+                {{ tag.description }}
+            </p>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+
+    {% if user.is_superuser %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col">
+                <a href="{{ tag.get_update_url }}">
+                    <button type="submit" class="btn btn-success btn-lg shadow">Редактировать</button>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{ tag.get_delete_url }}">
+                    <button type="submit" class="btn btn-danger btn-lg shadow">Удалить</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

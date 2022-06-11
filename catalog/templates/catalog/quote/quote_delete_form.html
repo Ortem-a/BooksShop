@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="card shadow">
+    <div class="card-header">
+        <h1>Удаление цитаты</h1>
+    </div>
+    <div class="card-body">
+        <p>Вы действительно хотите удалить цитату: {{ quote }}?</p>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <form action="{{ quote.get_delete_url }}" method="POST">
+                    {% csrf_token %}
+                    <input class="btn btn-danger btn-lg shadow" type="submit" value="Да, удалить." />
+                </form>
+            </div>
+            <div class="col">
+                <a href="{{ quote.get_absolute_url }}">
+                    <button type="submit" class="btn btn-success btn-lg shadow">Отменить</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block search_area %}
+  <form class="form-inline my-2 my-lg-0" action="{% url 'publishers_list_url' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Поиск по издателям" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+{% endblock %}
+
+{% block content %}
+
+<h1>publisher List</h1>
+
+{% if publishers %}
+<ul>
+  <div class="container">
+    <div class="row mb-lg-4">
+
+      {% for publisher in publishers %}
+
+      <div class="col mb-lg-4">
+        <div class="card shadow" style="width: 16rem;">
+          <a href="{{ publisher.get_absolute_url }}">
+            <div class="card-body">
+              <img src="{{ publisher.get_image_url }}"
+                class="card-img-top mb-4" style="height: 200px; width: 150px; display: block; margin: auto;">
+              <h5 class="card-title">{{ publisher.name }}</h5>
+              <p class="card-text"></p>
+              <!-- <a href="{{ book.get_absolute_url }}" class="btn btn-primary">READ</a> -->
+            </div>
+          </a>
+
+          <div class="card-footer"></div>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</ul>
+{% else %}
+<p>There are no publishers in the library.</p>
+{% endif %}
+
+<div class="align-items-end mb-lg-5">
+  <a href="{% url 'publisher_create_form_url' %}">
+    <button type="submit" class="btn btn-success btn-lg">КНОПКА ДОБАВИТЬ</button>
+  </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="card shadow mr-5 mb-5">
+  <div class="card-header">
+    <h1>CREATING BUY</h1>
+  </div>
+  <div class="card-body">
+
+    <form class="form-group" action="{% url 'buy_create_form_url' %}" method="post">
+      {% csrf_token %}
+
+      {% if form.errors %}
+      <div class="alert alert-warning">
+        {{ form.errors }}
+      </div>
+      {% endif %}
+
+      <div class="mb-3">
+        <strong>{{ form.user.label }}</strong>
+        <p>{{ form.user.help_text }}</p>
+        <div class="input-group mb-3">
+          {{ form.user }}
+          {{ user }}
+        </div>
+      </div>
+      <div class="mb-3">
+        <strong>{{ form.slug.label }}</strong>
+        {{ form.slug.help_text }}
+        <div class="input-group mb-3">
+          <div class="input-group-append">
+            {{ form.slug }}
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="mb-3">
+        <strong>{{ form.cost.label }}</strong>
+        {{ form.cost.help_text }}
+        <div class="input-group mb-3">
+            <span class="input-group-text">₽</span>
+            <div class="input-group-append">
+                {{ form.cost }}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3">
+        <strong>{{ form.date.label }}</strong>
+        {{ form.date.help_text }}
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            <div class="input-group-append">
+                {{ form.date }}
+            </div>
+            <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function () {
+                $("#datetimepicker1").datetimepicker({
+                    format: 'YYYY-MM-DD'
+                });
+            });
+        </script>
+    </div>
+
+    <div class="mb-3">
+      <strong>{{ form.composition.label }}</strong>
+      <p>{{ form.composition }}</p>
+    </div>
+
+  </div>
+  <div class="card-footer">
+    <div align="center">
+      <button type="submit" class="btn btn-success btn-lg">SUBMIT</button>
+    </div>
+  </div>
+  </form>
+</div>
+
+
+{% endblock %}s

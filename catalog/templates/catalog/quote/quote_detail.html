@@ -1,0 +1,184 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="mt-3">
+
+    <div class="col mb-3">
+        <a href="{% url 'quotes_list_url' %}">
+            <button type="submit" class="btn btn-warning btn-lg shadow">К списку цитат</button>
+        </a>
+    </div>
+
+
+    <h1>Цитата</h1>
+
+    <div class="card shadow">
+        <div class="card-header">
+            <div class="row mt-2">
+                <div class="col ml-3">
+                    <p>
+                        <strong>Из книги: </strong>
+                        <a href=" {{ quote.book.get_absolute_url }} ">"{{ quote.book.title }}"</a>
+                    </p>
+                </div>
+                <div class="col">
+                    <p>
+                        <strong>Автор: </strong>
+                        <a href=" {{ quote.author.get_absolute_url }} ">{{ quote.author.name }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <strong>Текст:</strong>
+            <p>
+                "{{ quote.text }}"
+            </p>
+        </div>
+
+
+        <div class="row mt-lg-3 mb-3">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col">
+
+                {% if user.is_authenticated %}
+
+                <form action="{% url 'add_quote_to_favorites_url' %}" id="form_add_quote_to_favorite">
+                    {% csrf_token %}
+                    <button id="button_add_quote_to_favorite" class="btn btn-light" style="color: black;" type="submit" data-user="{{ user }}" data-quote="{{ quote }}">
+                      <span class="fa fa-heart fa-lg"></span>
+                    </button>
+                </form>
+
+                {% endif %}
+
+                <script>
+                    var button = $('#button_add_quote_to_favorite');
+                    var btn_el = document.getElementById("button_add_quote_to_favorite");
+                    var user = button.data('user');
+                    var quote = button.data('quote');
+                    console.log('user is "' + user + '"\nquote is "' + quote + '"');
+                    var data = {};
+                    data.user = user;
+                    data.quote = quote;
+                    var csrf_token = $('#form_add_quote_to_favorite [name="csrfmiddlewaretoken"]').val();
+                    data["csrfmiddlewaretoken"] = csrf_token;
+
+                    checkQuoteAlreadyFavorite(data);
+
+                    $(btn_el).click(function(e) {
+                        e.preventDefault();
+                        console.log('кликнул по сердечку')
+                            // белый -> красный
+                        if (btn_el.getAttribute('class') == 'btn btn-light') {
+                            console.log('белый -> красный');
+                            btn_el.setAttribute('class', 'btn btn-danger');
+                            console.log('click:\n');
+                            console.log(data);
+                            console.log('\n');
+                            addQuoteToFavorite(data);
+                        }
+                        // красный -> белый
+                        else if (btn_el.getAttribute('class') == 'btn btn-danger') {
+                            console.log('красный -> белый');
+                            btn_el.setAttribute('class', 'btn btn-light');
+                            deleteQuoteFromFavorite(data);
+                        }
+                    })
+
+
+
+                    function checkQuoteAlreadyFavorite(data) {
+                        var url = 'check_quote_is_favorites/';
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            data: data,
+                            cache: true,
+                            success: function(data) {
+                                console.log('GET OK');
+                                console.log(data);
+                                if (data.user) {
+                                    btn_el.setAttribute('class', 'btn btn-danger');
+                                } else {
+                                    btn_el.setAttribute('class', 'btn btn-light');
+                                }
+                            },
+                            error: function() {
+                                console.log('GET error');
+                            }
+                        })
+                    }
+
+                    function addQuoteToFavorite(data) {
+                        console.log('addQuoteToFavorite:\n');
+                        console.log(data);
+                        console.log('\n');
+                        var url = 'add_quote_to_favorites/'
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: data,
+                            cache: true,
+                            success: function(data) {
+                                console.log('POST OK');
+                            },
+                            error: function() {
+                                console.log('POST error');
+                            }
+                        })
+                    }
+
+                    function deleteQuoteFromFavorite(data) {
+                        console.log('deleteQuoteFromFavorite:\n');
+                        console.log(data);
+                        console.log('\n');
+                        var url = 'delete_quote_from_favorites/'
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: data,
+                            cache: true,
+                            success: function(data) {
+                                console.log('POST OK');
+                                console.log(data);
+                            },
+                            error: function() {
+                                console.log('POST error');
+                            }
+                        })
+                    }
+                </script>
+
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+
+        <div class="card-footer"></div>
+    </div>
+
+
+    {% if user.is_authenticated %}
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col">
+                <a href="{{ quote.get_update_url }}">
+                    <button type="submit" class="btn btn-success btn-lg shadow">Редактировать</button>
+                </a>
+            </div>
+            <div class="col">
+                <a href="{{ quote.get_delete_url }}">
+                    <button type="submit" class="btn btn-danger btn-lg shadow">Удалить</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

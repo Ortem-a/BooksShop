@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block search_area %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'books_list_url' %}">
+    <input class="form-control mr-sm-2" type="search" placeholder="Поиск по книгам" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+</form>
+{% endblock %} {% block content %}
+
+<h1>Список книг</h1>
+
+{% if books %}
+<ul>
+    <div class="container">
+        <div class="row mb-lg-4">
+
+            {% for book in books %}
+
+            <div class="col mb-lg-4">
+                <div class="card shadow" style="width: 16rem;">
+                    <a href="{{ book.get_absolute_url }}">
+                        <div class="card-body">
+                            <img src="{{ book.get_image_url }}" class="card-img-top mb-4" style="height: 200px; width: 150px; display: block; margin: auto;">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-text">{{ book.price }}₽</p>
+                            <!-- <a href="{{ book.get_absolute_url }}" class="btn btn-primary">READ</a> -->
+                        </div>
+                    </a>
+
+                    <div class="card-footer">
+                        {% for tag in book.tag.all %}
+                        <a href="{{ tag.get_absolute_url }}">{{ tag }}</a> {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</ul>
+{% else %}
+<p>В библиотеке нет книг.</p>
+{% endif %} {% if user.is_superuser %}
+
+<div class="align-items-end mb-lg-5">
+    <a href="{% url 'book_create_form_url' %}">
+        <button type="submit" class="btn btn-success btn-lg">Добавить</button>
+    </a>
+</div>
+
+{% endif %} {% endblock %}

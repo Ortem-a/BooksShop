@@ -1,0 +1,105 @@
+{% extends "base.html" %} {% block content %}
+
+
+<div class="card shadow mr-5 mb-5">
+    <div class="card-header">
+        <h1>Редактирование книги</h1>
+    </div>
+    <div class="card-body">
+
+        <form class="form-group" action="{{ book.get_update_url }}" method="post">
+            {% csrf_token %} {% if form.errors %}
+            <div class="alert alert-warning">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <strong>{{ form.title.label }}</strong> {{ form.title.help_text }}
+                <div class="input-group mb-3">
+                    {{ form.title }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.slug.label }}</strong> {{ form.slug.help_text }}
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        {{ form.slug }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.image.label }}</strong>
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <p>{{ form.image }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.author.label }}</strong> {{ form.author.help_text }} {{ form.author }}
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.description.label }}</strong> {{ form.description.help_text }}
+                <div class="input-group mb-3">
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.price.label }}</strong> {{ form.price.help_text }}
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₽</span>
+                    <div class="input-group-append">
+                        {{ form.price }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.format.label }}</strong> {{ form.format.help_text }}
+                <p>
+                    {% for format in form.format %} {{ format }} {% endfor %}
+                </p>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.writing_date.label }}</strong> {{ form.writing_date.help_text }}
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <div class="input-group-append">
+                        {{ form.writing_date }}
+                    </div>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(function() {
+                        $("#datetimepicker1").datetimepicker({
+                            format: 'YYYY-MM-DD'
+                        });
+                    });
+                </script>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.language.label }}</strong> {{ form.language.help_text }}
+                <p>
+                    {% for language in form.language %} {{ language }} {% endfor %}
+                </p>
+            </div>
+            <div class="mb-3">
+                <strong>{{ form.tag.label }}</strong> {{ form.tag.help_text }}
+                <p>
+                    {% for tag in form.tag %} {{ tag }} {% endfor %}
+                </p>
+            </div>
+    </div>
+    <div class="card-footer">
+        <div align="center">
+            <button type="submit" class="btn btn-success btn-lg">Готово</button>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+{% endblock %}

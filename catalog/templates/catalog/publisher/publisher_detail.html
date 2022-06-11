@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mt-3">
+
+  <div class="col mb-3">
+    <a href="{% url 'publishers_list_url' %}">
+      <button type="submit" class="btn btn-warning btn-lg shadow">КНОПКА НАЗАД</button>
+    </a>
+  </div>
+
+
+  <h1>PUBLISHER</h1>
+
+  <div class="card shadow">
+    <div class="card-header">
+      <div class="row mt-2">
+        <h1>NAME: {{ publisher.name }}</h1>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-5">
+          <img src="{{ publisher.get_image_url }}">
+        </div>
+        <div class="col">
+          <p><strong>Description:</strong> {{ publisher.description }}</p>
+        </div>
+      </div>
+      <div class="row mt-lg-3"></div>
+    </div>
+    <div class="card-footer"></div>
+  </div>
+
+
+  <div class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col">
+        <a href="{{ publisher.get_update_url }}">
+          <button type="submit" class="btn btn-success btn-lg shadow">КНОПКА РЕДАКТИРОВАТЬ</button>
+        </a>
+      </div>
+      <div class="col">
+        <a href="{{ publisher.get_delete_url }}">
+          <button type="submit" class="btn btn-danger btn-lg shadow">КНОПКА УДАЛИТЬ</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

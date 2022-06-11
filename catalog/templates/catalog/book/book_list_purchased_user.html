@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>Ваша библиотека</h1>
+
+{% if purchasedbook_list %}
+<ul>
+    <div class="container">
+        <div class="row mb-lg-4">
+
+            {% for book in purchasedbook_list %}
+
+            <div class="col mb-lg-4">
+                <div class="card shadow" style="width: 16rem;">
+                    <a href="{{ book.get_absolute_url }}">
+                        <div class="card-body">
+                            <img src="{{ book.get_image }}" class="card-img-top mb-4" style="height: 200px; width: 150px; display: block; margin: auto;">
+                            <h5 class="card-title">{{ book.get_title }}</h5>
+                            <p class="card-text"></p>
+
+                        </div>
+                    </a>
+
+                    <div class="card-footer">
+                        <!-- {% for tag in book.book.tag.all %}
+                          <a href="{{ tag.get_absolute_url }}">{{ tag }}</a>
+                        {% endfor %} -->
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</ul>
+{% else %}
+<p>В Вашей библиотеке нет книг.</p>
+{% endif %} {% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="card shadow mr-5 mb-5">
+    <div class="card-header">
+        <h1>Регистрация</h1>
+    </div>
+    <div class="card-body">
+
+        <form class="form-group" action="." method="post">
+            {% csrf_token %} {% if form.errors %}
+            <div class="alert alert-warning">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <strong>{{ form.username.label }}:</strong>
+                    <div class="ml-3">
+                        {{ form.username }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <strong>{{ form.password1.label }}:</strong>
+                    <div class="ml-3">
+                        {{ form.password1 }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <strong>{{ form.password2.label }}:</strong>
+                    <div class="ml-3">
+                        {{ form.password2 }}
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <p><input class="btn btn-success" type="submit" value="Создать аккаунт"></p>
+        </div>
+    </div>
+
+    </form>
+</div>
+
+{% endblock %}

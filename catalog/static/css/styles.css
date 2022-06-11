@@ -1,0 +1,9 @@
+a {
+    color: rgb(48, 53, 58);
+}
+
+a:hover {
+    color: inherit;
+    padding: 10%;
+    background-color: rgb(208, 209, 209);
+}

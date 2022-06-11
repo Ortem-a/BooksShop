@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %} {% if form.errors %}
+<p>Имя пользователя и пароль не совпадают. Пожалуйста, попробуйте снова.</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<p>У вас нет доступа к этой странице. Войдите в аккаунт, у которого есть доступ.</p>
+{% else %} {% endif %} {% endif %}
+
+<div class="card shadow mr-5 mb-5">
+    <div class="card-header">
+        <h1>Вход в аккаунт</h1>
+    </div>
+    <div class="card-body">
+
+        <form class="form-group" action="{% url 'login' %}" method="post">
+            {% csrf_token %} {% if form.errors %}
+            <div class="alert alert-warning">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <strong>{{ form.username.label_tag }}</strong> {{ form.username }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <strong>{{ form.password.label_tag }}</strong> {{ form.password }}
+                </div>
+            </div>
+
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Войти" class="btn btn-success" />
+            </div>
+            <div class="col">
+                <input type="hidden" name="next" value="{{ next }}" /> {# Assumes you setup the password_reset view in your URLconf #}
+                <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+
+{% endblock %}
