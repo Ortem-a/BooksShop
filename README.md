@@ -2,4 +2,4 @@
 Здесь находится веб-приложение для работы с БД по теме: "Электронный магазин книг".
 
 
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/Ortem-a/BooksShop/blob/main/physical.png)
